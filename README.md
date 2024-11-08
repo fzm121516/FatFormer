@@ -1,3 +1,64 @@
+
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+python -m torch.distributed.launch \
+    --nproc_per_node=4 \
+    --master_port 21069 \
+    main.py \
+    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/ForenSynths8test \
+    --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
+    --eval \
+    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+
+torchrun --nproc_per_node=4 --master_port=21729 main.py \
+    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/foren8 \
+    --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
+    --eval \
+    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+torchrun --nproc_per_node=4 --master_port=26729 main.py \
+    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/gan9/test \
+    --test_selected_subsets 'BEGAN' 'AttGAN' 'SNGAN' 'MMDGAN' 'STGAN' 'CramerGAN' 'RelGAN' 'InfoMaxGAN' 'S3GAN' \
+    --eval \
+    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+
+torchrun --nproc_per_node=4 --master_port=25729 main.py \
+    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/uni/test \
+    --test_selected_subsets 'glide_100_10' 'ldm_200_cfg' 'glide_50_27' 'ldm_100' 'glide_100_27' 'dalle' 'ldm_200' 'guided' \
+    --eval \
+    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+torchrun --nproc_per_node=4 --master_port=26729 main.py \
+    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/diffforen8 \
+    --test_selected_subsets 'iddpm' 'sdv1' 'adm' 'pndm' 'sdv2' 'vqdiffusion' 'ldm' 'ddpm' \
+    --eval \
+    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # FatFormer
 
 This repository is an official implementation of the CVPR 2024 paper "[Forgery-aware Adaptive Transformer for Generalizable Synthetic Image Detection](https://arxiv.org/abs/2312.16649)".

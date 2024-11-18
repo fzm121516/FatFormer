@@ -46,7 +46,13 @@ torchrun --nproc_per_node=4 --master_port=26729 main.py \
     --num_context_embedding 8
 
 
-
+torchrun --nproc_per_node=4 --master_port=20429 main.py \
+    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/d1k/test \
+    --test_selected_subsets 'dalle' 'ddpm' 'guided-diffusion' 'improved-diffusion' 'midjourney'\
+    --eval \
+    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
 
 
 

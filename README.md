@@ -4,19 +4,19 @@ python -m torch.distributed.launch \
     --nproc_per_node=4 \
     --master_port 21069 \
     main.py \
-    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/ForenSynths8test \
+    --dataset_path /home/ubuntu/zm/NPR-DeepfakeDetection/dataset/ForenSynths8test \
     --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
     --eval \
-    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
     --num_vit_adapter 3 \
     --num_context_embedding 8
 
 
 torchrun --nproc_per_node=4 --master_port=21729 main.py \
-    --dataset_path /home/fanzheming/zm/NPR-DeepfakeDetection/dataset/foren8 \
+    --dataset_path /home/ubuntu/zm/NPR-DeepfakeDetection/dataset/foren8 \
     --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
     --eval \
-    --pretrained_model /home/fanzheming/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
     --num_vit_adapter 3 \
     --num_context_embedding 8
 
@@ -56,10 +56,16 @@ torchrun --nproc_per_node=4 --master_port=20429 main.py \
 
 
 
+20250223
 
 
-
-
+torchrun --nproc_per_node=4 --master_port=21729 main1.py \
+    --dataset_path /home/ubuntu/zm/NPR-DeepfakeDetection/dataset/foren8 \
+    --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
 
 
 

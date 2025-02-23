@@ -154,8 +154,8 @@ def evaluate(model, data_loaders, device, args=None, test=False):
         plt.ylabel('Frequency')
         plt.title(f'Logit Distribution - {data_name}')
         plt.legend(loc='upper center', frameon=True, fontsize=10)
-        plt.savefig(f'./logitspace/{data_name}.png', bbox_inches='tight', dpi=300)
-        plt.savefig(f'./logitspace/{data_name}.svg', bbox_inches='tight')
+        plt.savefig(f'./logitspace/{data_name}fake.png', bbox_inches='tight', dpi=300)
+        plt.savefig(f'./logitspace/{data_name}fake.svg', bbox_inches='tight')
         plt.close()
 
         plt.figure(figsize=(6, 6))
@@ -175,8 +175,8 @@ def evaluate(model, data_loaders, device, args=None, test=False):
         plt.ylabel('Frequency')
         plt.title(f'Logit Distribution - {data_name}')
         plt.legend(loc='upper center', frameon=True, fontsize=10)
-        plt.savefig(f'./logitspace/{data_name}.png', bbox_inches='tight', dpi=300)
-        plt.savefig(f'./logitspace/{data_name}.svg', bbox_inches='tight')
+        plt.savefig(f'./logitspace/{data_name}real.png', bbox_inches='tight', dpi=300)
+        plt.savefig(f'./logitspace/{data_name}real.svg', bbox_inches='tight')
         plt.close()
 
 

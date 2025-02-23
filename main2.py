@@ -84,8 +84,7 @@ def evaluate(model, data_loaders, device, args=None, test=False):
     test_ACC = []
     test_real_ACC = []
     test_fake_ACC = []
-    os.makedirs('./logitspace', exist_ok=True)
-    os.makedirs('./logit0space', exist_ok=True)
+    os.makedirs('./logit2dspace', exist_ok=True)
 
     for data_name, data_loader in data_loaders.items():
         metric_logger = utils.MetricLogger(delimiter="  ")
@@ -122,8 +121,7 @@ def evaluate(model, data_loaders, device, args=None, test=False):
             merge_logits0.extend(data)
 
         y_true, y_pred = np.array(merge_y_true), np.array(merge_y_pred)
-        logits_array = np.array(merge_logits)
-        logits0_array = np.array(merge_logits0)
+
 
         r_acc = accuracy_score(y_true[y_true==0], y_pred[y_true==0] > 0.5)
         f_acc = accuracy_score(y_true[y_true==1], y_pred[y_true==1] > 0.5)
@@ -136,48 +134,46 @@ def evaluate(model, data_loaders, device, args=None, test=False):
         test_real_ACC.append(r_acc)
         test_fake_ACC.append(f_acc)
 
-        
-        plt.figure(figsize=(6, 6))
-        plt.hist(logits_array[y_true == 0], 
-                bins=200, 
-                alpha=0.5, 
-                color='blue', 
-                label='Real Images',
-                )  
-        plt.hist(logits_array[y_true == 1], 
-                bins=200, 
-                alpha=0.5, 
-                color='red', 
-                label='Synthetic Images',
-                )
-        plt.xlabel('Logits for Synthetic Class')
-        plt.ylabel('Frequency')
-        plt.title(f'Logit Distribution - {data_name}')
-        plt.legend(loc='upper center', frameon=True, fontsize=10)
-        plt.savefig(f'./logitspace/{data_name}.png', bbox_inches='tight', dpi=300)
-        plt.savefig(f'./logitspace/{data_name}.svg', bbox_inches='tight')
-        plt.close()
+
+        fake_logits = np.array(merge_logits)
+        real_logits  = np.array(merge_logits0)
+        # fake_logits = np.array(fake_logits)
+        # real_logits = np.array(real_logits)
+
 
         plt.figure(figsize=(6, 6))
-        plt.hist(logits0_array[y_true == 0], 
-                bins=200, 
-                alpha=0.5, 
-                color='blue', 
-                label='Real Images',
-                )  
-        plt.hist(logits0_array[y_true == 1], 
-                bins=200, 
-                alpha=0.5, 
-                color='red', 
-                label='Synthetic Images',
-                )
-        plt.xlabel('Logits for Real Class')
-        plt.ylabel('Frequency')
-        plt.title(f'Logit Distribution - {data_name}')
+
+            # 绘制散点图（根据真实标签着色）
+        plt.scatter(real_logits[y_true == 0], fake_logits[y_true == 0],  # 真实样本
+                        c='blue', alpha=0.3, s=10, label='Real Images')
+        plt.scatter(real_logits[y_true == 1], fake_logits[y_true == 1],  # 合成样本
+                        c='red', alpha=0.3, s=10, label='Synthetic Images')
+
+            # 绘制决策边界（x=y）
+        min_val = min(real_logits.min(), fake_logits.min())
+        max_val = max(real_logits.max(), fake_logits.max())
+        plt.plot([min_val, max_val], [min_val, max_val],  # 45度线
+                    'k--', lw=1, label='Decision Boundary')
+
+            # 设置坐标轴范围和标签
+        plt.xlim(min_val, max_val)
+        plt.ylim(min_val, max_val)
+        plt.xlabel('Logits for Real Class', fontsize=12)
+        plt.ylabel('Logits for Synthetic Class', fontsize=12)
+        plt.title(f'Logit Space Visualization - {data_name}', fontsize=14)
+
+            # 添加图例和网格
         plt.legend(loc='upper center', frameon=True, fontsize=10)
-        plt.savefig(f'./logitspace/{data_name}.png', bbox_inches='tight', dpi=300)
-        plt.savefig(f'./logitspace/{data_name}.svg', bbox_inches='tight')
+        plt.grid(alpha=0.2)
+
+            # 保存图像
+        plt.savefig(f'./logit2dspace/{data_name}_2d.png', bbox_inches='tight', dpi=300)
+        plt.savefig(f'./logit2dspace/{data_name}_2d.svg', bbox_inches='tight')
         plt.close()
+        
+
+
+
 
 
     output_strs = []

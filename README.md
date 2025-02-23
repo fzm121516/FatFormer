@@ -67,9 +67,21 @@ torchrun --nproc_per_node=4 --master_port=21729 main1.py \
     --num_vit_adapter 3 \
     --num_context_embedding 8
 
+torchrun --nproc_per_node=4 --master_port=25729 main1.py \
+    --dataset_path /home/ubuntu/zm/NPR-DeepfakeDetection/dataset/uni/test \
+    --test_selected_subsets 'glide_100_10' 'ldm_200_cfg' 'glide_50_27' 'ldm_100' 'glide_100_27' 'dalle' 'ldm_200' 'guided' \
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
 
-
-
+torchrun --nproc_per_node=4 --master_port=20429 main1.py \
+    --dataset_path /home/ubuntu/zm/NPR-DeepfakeDetection/dataset/d1k/test \
+    --test_selected_subsets 'dalle' 'ddpm' 'guided-diffusion' 'improved-diffusion' 'midjourney'\
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
 
 # FatFormer
 

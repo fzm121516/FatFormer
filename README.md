@@ -83,6 +83,14 @@ torchrun --nproc_per_node=4 --master_port=20429 main1.py \
     --num_vit_adapter 3 \
     --num_context_embedding 8
 
+torchrun --nproc_per_node=4 --master_port=27429 main1.py \
+    --dataset_path /home/ubuntu/genimagestest \
+    --test_selected_subsets 'wukong' 'VQDM' 'sd14' 'sd15' 'Midjourney' 'glide' 'biggan' 'adm'\
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
 # FatFormer
 
 This repository is an official implementation of the CVPR 2024 paper "[Forgery-aware Adaptive Transformer for Generalizable Synthetic Image Detection](https://arxiv.org/abs/2312.16649)".

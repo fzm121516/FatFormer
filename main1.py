@@ -171,7 +171,7 @@ def evaluate(model, data_loaders, device, args=None, test=False):
                 color='red', 
                 label='Synthetic Images',
                 )
-        plt.xlabel('Logits for Synthetic Class', fontsize=18)  # 设置 x 轴标签字体大小为 12
+        plt.xlabel('Logits for Real Class', fontsize=18)  # 设置 x 轴标签字体大小为 12
         plt.ylabel('Frequency', fontsize=18)  # 设置 y 轴标签字体大小为 12
         plt.title(f'Logit Distribution - {data_name}', fontsize=18)  # 设置标题字体大小为 14
         plt.legend(loc='upper center', frameon=True, fontsize=12)

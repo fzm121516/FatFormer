@@ -213,3 +213,15 @@ class CLIPModel(nn.Module):
         aug_logits = torch.stack(aug_logits)
         
         return logits + aug_logits
+    
+    
+    def encode_img(self, image):
+        tokenized_prompts = self.tokenized_prompts
+        logit_scale = self.logit_scale.exp()
+
+        image_features = self.image_encoder(image.type(self.dtype), return_full=False)
+        image_features_nrom = image_features / image_features.norm(dim=-1, keepdim=True)
+
+
+        
+        return image_features_nrom

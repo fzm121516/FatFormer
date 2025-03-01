@@ -15,14 +15,20 @@ from tqdm import tqdm
 from sklearn.manifold import TSNE  # 导入t-SNE算法
 import matplotlib.pyplot as plt  # 导入Matplotlib绘图库
 
-def plot_tsne(features, labels, title, save_path=None, dpi=1200):
+def plot_tsne(features, labels, title, save_path=None, dpi=1200, sample_size=None):
+    # 如果指定了下采样大小，则对数据进行随机下采样
+    if sample_size and len(features) > sample_size:
+        indices = np.random.choice(len(features), sample_size, replace=False)
+        features = features[indices]
+        labels = labels[indices]
+
     # 使用 t-SNE 进行降维
     tsne = TSNE(n_components=2, random_state=123)
     tsne_results = tsne.fit_transform(features)
 
     # 绘制散点图
     plt.figure(figsize=(12, 12))
-    scatter = plt.scatter(tsne_results[:, 0], tsne_results[:, 1], c=labels, cmap='coolwarm', s=10)
+    plt.scatter(tsne_results[:, 0], tsne_results[:, 1], c=labels, cmap='coolwarm', s=100)
     plt.title(title)
     plt.xticks([])  # 隐藏 X 轴刻度
     plt.yticks([])  # 隐藏 Y 轴刻度
@@ -45,21 +51,6 @@ def plot_tsne(features, labels, title, save_path=None, dpi=1200):
 
     plt.close()
 
-def evaluate_and_plot_tsne(model, data_loader, file_name, save_path):
-    features = []  # 存储特征
-    labels = []  # 存储标签
-
-    with torch.no_grad():  # 禁用梯度计算
-        for img1, label, path in tqdm(data_loader, desc=f"Processing {file_name}", leave=False):
-            feature = model.encode_image(img1.cuda()).detach().cpu().numpy()  # 提取特征
-            features.extend(feature)  # 存储特征
-            labels.extend(label.flatten().tolist())  # 存储标签
-
-    features = np.array(features)  # 转换为NumPy数组
-    labels = np.array(labels)  # 转换为NumPy数组
-
-    # 绘制并保存 t-SNE 图
-    plot_tsne(features, labels, title=f't-SNE plot for {file_name}', save_path=save_path)
 
 
 
@@ -166,12 +157,12 @@ def evaluate(model, data_loaders, device, args=None, test=False):
 
         # features = np.array(features)  # 转换为NumPy数组
         labels = np.array(labels)  # 转换为NumPy数组
-        tsne_dir = 'tsne_0227fat'
+        tsne_dir = 'tsne_0227fat_1k'
         if not os.path.exists(tsne_dir):
             os.makedirs(tsne_dir)
         tsne_save_path = os.path.join(tsne_dir, f'tsne_{data_name}.svg')  # 保存路径设置为当前路径下的 tsne 文件夹
         # 绘制并保存 t-SNE 图
-        plot_tsne(features, labels, title=f't-SNE plot for {data_name}', save_path=tsne_save_path)
+        plot_tsne(features, labels, title=f't-SNE plot for {data_name}', save_path=tsne_save_path,sample_size=2000)
 
 
 

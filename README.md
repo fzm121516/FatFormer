@@ -95,7 +95,7 @@ torchrun --nproc_per_node=4 --master_port=27429 main1.py \
 
 
 
-CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node=1 --master_port=27429 main3.py \
+CUDA_VISIBLE_DEVICES=2 torchrun --nproc_per_node=1 --master_port=27429 main3.py \
     --dataset_path /home/ubuntu/genimagestest \
     --test_selected_subsets 'wukong' 'VQDM' 'sd14' 'sd15' 'Midjourney' 'glide' 'biggan' 'adm'\
     --eval \

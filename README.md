@@ -103,6 +103,30 @@ CUDA_VISIBLE_DEVICES=2 torchrun --nproc_per_node=1 --master_port=27429 main3.py 
     --num_vit_adapter 3 \
     --num_context_embedding 8
 
+torchrun --nproc_per_node=4 --master_port=21729 main_old.py \
+    --dataset_path /home/ubuntu/jpeg75/foren8 \
+    --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+torchrun --nproc_per_node=4 --master_port=21729 main_old.py \
+    --dataset_path /home/ubuntu/jpeg50/foren8 \
+    --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
+torchrun --nproc_per_node=2 --master_port=21729 main_old.py \
+    --dataset_path /home/ubuntu/blur1/foren8 \
+    --test_selected_subsets 'progan' 'stylegan' 'stylegan2' 'biggan' 'cyclegan' 'stargan' 'gaugan' 'deepfake' \
+    --eval \
+    --pretrained_model /home/ubuntu/zm/FatFormer/pretrained/fatformer_4class_ckpt.pth \
+    --num_vit_adapter 3 \
+    --num_context_embedding 8
+
 
 # FatFormer
 
